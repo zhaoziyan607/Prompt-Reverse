@@ -1,5 +1,5 @@
-# Render Blueprint：连接 GitHub/GitLab 后可用「Blueprint」一键创建服务
-# 文档：https://render.com/docs/infrastructure-as-code
+# Render Blueprint: create service from repo with Blueprint
+# Docs: https://render.com/docs/infrastructure-as-code
 
 services:
   - type: web
@@ -13,11 +13,11 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "20.18.0"
-      # 在 Render 控制台手动填写（勿提交到 Git）
+      # Fill in Render dashboard (do not commit secrets)
       - key: OPENAI_API_KEY
         sync: false
       - key: OPENAI_BASE_URL
         value: https://qianfan.baidubce.com/v2/coding
       - key: VISION_MODEL
-        value: glm-5
-      # Render 会自动注入 PORT；本仓库 server 已读取 process.env.PORT
+        value: minimax-m2.5
+      # Render injects PORT automatically; server reads process.env.PORT

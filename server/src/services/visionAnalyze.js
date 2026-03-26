@@ -120,7 +120,26 @@ async function callOpenAICompatibleVision(imageBase64, mime, opts = {}) {
 
   const errText = await res.text();
   if (!res.ok) {
-    throw new Error(`Vision API ${res.status}: ${errText.slice(0, 800)}`);
+    let detail = errText.slice(0, 800);
+    try {
+      const parsedErr = JSON.parse(errText);
+      const msg = parsedErr?.error?.message || parsedErr?.message;
+      if (typeof msg === 'string' && msg.trim()) detail = msg.trim();
+    } catch {
+      // keep raw text fallback
+    }
+
+    const lc = detail.toLowerCase();
+    if (
+      lc.includes('image_url') &&
+      (lc.includes('only supported') || lc.includes('invalid content type'))
+    ) {
+      throw new Error(
+        '当前所选模型不支持图片输入。请在服务端改用支持多模态的模型与端点（例如千帆 v2 多模态模型），然后重试。'
+      );
+    }
+
+    throw new Error(`Vision API ${res.status}: ${detail}`);
   }
 
   let data;
