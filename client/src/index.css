@@ -1,0 +1,102 @@
+:root {
+  --bg: #ffffff;
+  --bg-sub: #f5f7fa;
+  --primary: #165dff;
+  --success: #00b42a;
+  --warning: #ff7d00;
+  --text: #1d2129;
+  --text-2: #4e5969;
+  --text-3: #86909c;
+  --radius: 8px;
+  --shadow: 0 8px 24px rgba(15, 23, 42, 0.06);
+  font-family: 'DM Sans', 'Segoe UI', system-ui, sans-serif;
+  color: var(--text);
+  background: var(--bg-sub);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+@media (max-width: 900px) {
+  .pre-result-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* 权重「?」：悬停即显，自定义气泡（替代原生 title，延迟长且不可样式） */
+.weight-help-anchor {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
+
+.weight-help-btn {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: none;
+  background: #1d2129;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0;
+  cursor: help;
+  flex-shrink: 0;
+}
+.weight-help-btn:hover,
+.weight-help-btn:focus-visible {
+  background: #000;
+}
+.weight-help-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.weight-help-bubble {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  width: min(240px, 70vw);
+  padding: 10px 12px;
+  background: #2b2f36;
+  color: #f2f3f5;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  text-align: left;
+  border-radius: 8px;
+  border: 1px solid #4e5969;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 30;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.08s ease, visibility 0.08s ease;
+}
+
+.weight-help-anchor:hover .weight-help-bubble,
+.weight-help-anchor:focus-within .weight-help-bubble {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}

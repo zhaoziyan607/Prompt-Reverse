@@ -1,0 +1,23 @@
+# Render Blueprint：连接 GitHub/GitLab 后可用「Blueprint」一键创建服务
+# 文档：https://render.com/docs/infrastructure-as-code
+
+services:
+  - type: web
+    name: prompt-reverse-engine
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20.18.0"
+      # 在 Render 控制台手动填写（勿提交到 Git）
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_BASE_URL
+        value: https://qianfan.baidubce.com/v2/coding
+      - key: VISION_MODEL
+        value: glm-5
+      # Render 会自动注入 PORT；本仓库 server 已读取 process.env.PORT
